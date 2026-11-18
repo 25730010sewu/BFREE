@@ -603,11 +603,6 @@ body { letter-spacing: -.01em; -webkit-font-smoothing: antialiased; }
   <aside class="panel" aria-label="검색, 필터, 시설 목록">
     <div class="scope" role="status"><span class="live" aria-hidden="true"></span><span>서비스 지역 <b>서울 중구</b> <span class="sep">·</span> 그 외 지역 준비 중</span></div>
 
-    <form id="searchForm" class="search" role="search">
-      <label for="q" class="sr-only">시설, 역, 동 이름 검색</label>
-      <input id="q" type="search" placeholder="시설·역·동 이름 (예: 명동, 충무로)" autocomplete="off">
-      <p id="searchMsg" class="search-msg" aria-live="polite"></p>
-    </form>
 
     <section aria-labelledby="filterTitle">
       <h2 id="filterTitle" class="label">필요한 편의시설</h2>
@@ -620,6 +615,12 @@ body { letter-spacing: -.01em; -webkit-font-smoothing: antialiased; }
       <p class="ask" aria-hidden="true">어떤 도움이 필요하세요?</p>
       <div id="presets" class="presets"></div>
     </section>
+
+    <form id="searchForm" class="search" role="search">
+      <label for="q" class="sr-only">시설, 역, 동 이름 검색</label>
+      <input id="q" type="search" placeholder="시설·역·동 이름 (예: 명동, 충무로)" autocomplete="off">
+      <p id="searchMsg" class="search-msg" aria-live="polite"></p>
+    </form>
 
     <div class="filter-foot">
       <p id="count" class="count" aria-live="polite"></p>
