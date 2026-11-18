@@ -7,6 +7,7 @@
 <meta name="description" content="서울 중구의 경사로·엘리베이터·장애인 화장실·점자 안내 정보를 지도로 찾는 배리어프리 편의시설 지도">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
 body { margin: 0; }
@@ -416,6 +417,157 @@ button { cursor: pointer; }
 .filter-foot .count { min-width: 0; flex: 1 1 160px; }
 .fav-toggle, .filter-actions .link { white-space: nowrap; }
 .dong.hit { fill: color-mix(in srgb, var(--mint) 16%, transparent); }
+
+/* ---------- 보기 탭 ---------- */
+body { display: flex; flex-direction: column; }
+.viewbar { background: var(--surface); border-bottom: 1px solid var(--line); padding: 10px 16px; display: flex; justify-content: center; }
+.view-tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: color-mix(in srgb, var(--mint) 10%, var(--surface)); border: 1px solid var(--line); }
+.view-tabs button { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 22px; border: 0; border-radius: 999px;
+  background: transparent; color: var(--muted); font: inherit; font-weight: 700; font-size: .95rem; cursor: pointer; }
+.view-tabs button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.view-tabs button[aria-selected="true"] { background: var(--brand); color: #fff; }
+.view-tabs button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- 목록 보기 ---------- */
+.item-extra { display: none; }
+.layout.mode-list { grid-template-columns: 1fr; grid-template-rows: auto; }
+.mode-list .map-wrap { display: none; }
+.mode-list .panel { border-right: 0; border-top: 0; background: var(--bg);
+  padding: 24px max(20px, calc((100% - 1180px) / 2)); gap: 18px; }
+.mode-list .presets { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.mode-list section[aria-labelledby="legendTitle"] { display: none; }
+.mode-list .list { grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; align-items: start; }
+.mode-list .list > li:not(.empty) { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; overflow: hidden;
+  display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(11,79,75,.06); }
+.mode-list .item { border: 0; border-radius: 0; padding: 18px 18px 10px; cursor: default; background: transparent; }
+.mode-list .item:hover { border: 0; }
+.mode-list .item .tags { display: none; }
+.mode-list .item-name { font-size: 1.12rem; }
+.mode-list .item-cat { background: color-mix(in srgb, var(--mint) 14%, var(--surface)); color: var(--brand); padding: 2px 10px; border-radius: 999px; font-weight: 700; white-space: nowrap; }
+.mode-list .item-extra { display: grid; gap: 10px; padding: 0 18px 18px; }
+.mode-list .list > li:not(.empty) { cursor: pointer; transition: border-color .15s, transform .15s; }
+.mode-list .list > li:not(.empty):hover { border-color: var(--mint); transform: translateY(-2px); }
+.mode-list .item { cursor: pointer; }
+.yes-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ytag { font-size: .82rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--mint) 14%, var(--surface)); color: var(--brand); }
+.hrs { margin: 0; font-size: .82rem; color: var(--muted); line-height: 1.45; }
+.mode-list .scope, .mode-list .feat-help, .mode-list .preset span.d { display: none; }
+.mode-list .preset { padding: 8px 12px; }
+.mode-list .preset .pi { width: 36px; height: 36px; }
+@media (max-width: 760px) {
+  .layout.mode-list { grid-template-rows: auto; }
+  .mode-list .panel { padding: 16px; }
+  .mode-list .presets { grid-template-columns: 1fr; }
+  .mode-list .list { grid-template-columns: 1fr; }
+  .view-tabs { width: 100%; } .view-tabs button { flex: 1; justify-content: center; padding: 0 10px; }
+}
+
+.ask, .preset.all { display: none; }
+.mode-list .preset.all { display: flex; }
+.mode-list .ask { display: block; margin: 0 0 14px; font-size: 1.5rem; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+.mode-list #presetTitle, .mode-list section[aria-labelledby="filterTitle"], .mode-list .filter-actions, .mode-list .note { display: none; }
+.mode-list .search input { min-height: 60px; font-size: 1.15rem; border-radius: 14px; padding-inline: 18px; }
+.mode-list .presets { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mode-list .preset { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; padding: 20px 10px; min-height: 140px;
+  border: 2px solid var(--line); border-radius: 18px; }
+.mode-list .preset .pi { width: 60px; height: 60px; }
+.mode-list .preset .pi svg { width: 34px; height: 34px; }
+.mode-list .preset b { font-size: 1.15rem; }
+.mode-list .preset[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+.mode-list .preset[aria-pressed="true"] .pi { background: #fff; }
+.mode-list .preset[aria-pressed="true"] .pi svg { stroke: var(--brand); }
+.mode-list .preset[aria-pressed="true"] .pi svg .f { fill: var(--brand); }
+.mode-list .preset.all .pi svg { fill: none; }
+.mode-list .count { font-size: 1.2rem; font-weight: 800; }
+.mode-list .list { grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); }
+.mode-list .item { padding: 22px 22px 10px; }
+.mode-list .item-name { font-size: 1.35rem; font-weight: 800; }
+.mode-list .item-meta { font-size: 1rem; }
+.mode-list .item-cat { font-size: .9rem; }
+.mode-list .item-extra { padding: 0 22px 22px; gap: 12px; }
+.ytag { font-size: .98rem; padding: 6px 12px; }
+.hrs { font-size: .95rem; }
+@media (max-width: 760px) {
+  .mode-list .presets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mode-list .preset { min-height: 120px; }
+  .mode-list .list { grid-template-columns: 1fr; }
+  .mode-list .ask { font-size: 1.3rem; }
+}
+
+/* ================= 마감 다듬기 ================= */
+:root { --font-display: "Pretendard Variable", Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+        --font-body: "Pretendard Variable", Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+        --page: color-mix(in srgb, var(--surface) 96%, var(--ink)); }
+body { letter-spacing: -.01em; -webkit-font-smoothing: antialiased; }
+.ic { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 탭: 밑줄형, 본문 폭에 맞춤 */
+.viewbar { justify-content: flex-start; padding: 0 max(20px, calc((100% - 1180px) / 2)); background: var(--surface); }
+.view-tabs { background: none; border: 0; padding: 0; gap: 8px; border-radius: 0; }
+.view-tabs button { border-radius: 0; min-height: 54px; padding: 0 6px; margin-right: 18px; color: var(--muted); font-weight: 600;
+  border-bottom: 3px solid transparent; }
+.view-tabs button[aria-selected="true"] { background: none; color: var(--ink); border-bottom-color: var(--tactile); font-weight: 700; }
+.view-tabs button:hover { color: var(--ink); }
+
+/* 목록 화면 */
+.mode-list .panel { background: var(--page); padding-top: 32px; gap: 20px; }
+.mode-list .search input { background-color: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding-left: 52px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2356706c' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 18px center; background-size: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+.mode-list .search input:focus { border-color: var(--tactile); box-shadow: 0 0 0 4px color-mix(in srgb, var(--tactile) 18%, transparent); }
+.mode-list .ask { font-size: 1.3rem; font-weight: 700; letter-spacing: -.03em; }
+.mode-list .preset { border: 1px solid var(--line); border-radius: 14px; box-shadow: none; background: var(--surface); min-height: 128px; gap: 12px; }
+.mode-list .preset:hover { border-color: color-mix(in srgb, var(--tactile) 50%, var(--line)); }
+.mode-list .preset .pi { width: auto; height: auto; background: none; }
+.mode-list .preset .pi svg { width: 40px; height: 40px; stroke: var(--tactile); stroke-width: 1.6; }
+.mode-list .preset .pi svg .f { fill: var(--tactile); }
+.mode-list .preset b { font-size: 1.08rem; font-weight: 600; }
+.mode-list .preset[aria-pressed="true"] { background: color-mix(in srgb, var(--tactile) 7%, var(--surface)); border: 2px solid var(--tactile); color: var(--ink); }
+.mode-list .preset[aria-pressed="true"] b { font-weight: 700; color: var(--tactile); }
+.mode-list .preset[aria-pressed="true"] .pi { background: none; }
+.mode-list .preset[aria-pressed="true"] .pi svg { stroke: var(--tactile); }
+.mode-list .preset[aria-pressed="true"] .pi svg .f { fill: var(--tactile); }
+.mode-list .filter-foot { margin-top: 12px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+.mode-list .count { font-size: 1.05rem; font-weight: 700; padding-bottom: 12px; }
+
+.mode-list .list { gap: 14px; }
+.mode-list .list > li:not(.empty) { border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+.mode-list .list > li:not(.empty):hover { transform: none; border-color: color-mix(in srgb, var(--tactile) 55%, var(--line));
+  box-shadow: 0 6px 18px rgba(16,24,40,.08); }
+.mode-list .item { padding: 22px 24px 8px; }
+.mode-list .item-name { font-size: 1.25rem; font-weight: 700; letter-spacing: -.03em; }
+.mode-list .item-cat { background: none; padding: 0; color: var(--muted); font-weight: 500; font-size: .88rem; }
+.mode-list .item-meta { color: var(--muted); font-size: .95rem; }
+.mode-list .item-extra { padding: 6px 24px 20px; gap: 14px; }
+.yes-tags { gap: 6px 8px; }
+.ytag { display: inline-flex; align-items: center; gap: 5px; background: none; border: 1px solid var(--line); border-radius: 8px;
+  padding: 5px 10px; font-size: .92rem; font-weight: 500; color: var(--ink); }
+.ytag .ic { color: var(--tactile); stroke-width: 2.4; }
+.hrs { display: flex; gap: 8px; align-items: flex-start; font-size: .92rem; }
+.hrs .ic { margin-top: .22em; }
+.more { display: inline-flex; align-items: center; gap: 6px; justify-self: start; margin-top: 2px; padding-top: 14px; width: 100%;
+  border-top: 1px solid var(--line); color: var(--tactile); font-weight: 600; font-size: .92rem; }
+.mode-list .list > li:hover .more .ic { transform: translateX(3px); }
+.more .ic { transition: transform .15s; }
+
+/* 목록 화면 하단 출처·팀 정보 */
+.mode-list .note { display: block; border-top: 1px solid var(--line); padding-top: 20px; margin-top: 16px; font-size: .84rem; line-height: 1.6; }
+.note b { color: var(--ink); font-weight: 600; margin-right: 6px; }
+.mode-list .team { font-size: .84rem; color: var(--muted); margin: 0 0 8px; }
+
+/* 지도 상세 창 버튼 아이콘 */
+#readBtn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+#readBtn .ic { width: 1.15em; height: 1.15em; }
+@media (max-width: 760px) {
+  .viewbar { padding: 0 16px; }
+  .view-tabs { width: 100%; gap: 0; }
+  .view-tabs button { margin-right: 0; }
+  .mode-list .panel { padding-top: 20px; }
+  .mode-list .preset { min-height: 112px; }
+}
+
+.detail { border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 12px 32px rgba(16,24,40,.14); padding: 20px; }
+.detail .btn { border-radius: 10px; }
 </style>
 </head>
 <body>
@@ -439,7 +591,15 @@ button { cursor: pointer; }
   <button id="fontToggle" class="toggle" aria-pressed="false" title="화면 글자 크기 바꾸기"><span class="fz-ico" aria-hidden="true"><small>가</small>가</span><span class="fz-lbl">글자 크게</span></button>
 </header>
 
-<main class="layout">
+<nav class="viewbar" aria-label="보기 방식">
+  <div class="view-tabs" role="tablist">
+    <button type="button" role="tab" id="tabList" data-view="list" aria-selected="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="4" cy="18" r="1.2"/></svg>목록 보기</button>
+    <button type="button" role="tab" id="tabMap" data-view="map" aria-selected="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>지도 보기</button>
+  </div>
+</nav>
+<main class="layout mode-list" id="layout">
   <aside class="panel" aria-label="검색, 필터, 시설 목록">
     <div class="scope" role="status"><span class="live" aria-hidden="true"></span><span>서비스 지역 <b>서울 중구</b> <span class="sep">·</span> 그 외 지역 준비 중</span></div>
 
@@ -457,6 +617,7 @@ button { cursor: pointer; }
 
     <section aria-labelledby="presetTitle">
       <h2 id="presetTitle" class="label">유형별 빠른 선택</h2>
+      <p class="ask" aria-hidden="true">어떤 도움이 필요하세요?</p>
       <div id="presets" class="presets"></div>
     </section>
 
@@ -484,7 +645,7 @@ button { cursor: pointer; }
       </div>
     </section>
 
-    <p class="note">편의시설 30곳은 서울다누림관광(서울관광재단) 접근성 조사와 서울시 지하철 엘리베이터 발표를 바탕으로 정리했어요. 운영시간과 현장 상황은 바뀔 수 있으니 방문 전에 확인해 주세요. 도로·철도·하천·역: © OpenStreetMap 기여자, 행정경계: 통계청(2013).</p>
+    <p class="note"><b>데이터 출처</b> 서울다누림관광(서울관광재단) 접근성 정보, 서울시 지하철 엘리베이터 설치 현황(2025.12). 운영시간과 현장 상황은 변동될 수 있으니 방문 전 확인을 권장합니다. 도로·철도·하천·역: © OpenStreetMap 기여자, 행정경계: 통계청(2013).</p>
     <p class="team">숭의여대 소프트웨어융합과 · 팀장 조한나 · 팀원 이인아</p>
   </aside>
 
@@ -693,6 +854,7 @@ const MIN_W = G.jgBox[2] * 0.1, MAX_W = VIEWS.nation.w * 1.6;
 let vb = { ...VIEWS.jg };
 
 function fitAspect(v) {
+  if (!svg.clientWidth || !svg.clientHeight) return { ...v };
   const r = svg.clientWidth / Math.max(svg.clientHeight, 1);
   const o = { ...v };
   if (o.w / o.h > r) { const nh = o.w / r; o.y -= (nh - o.h) / 2; o.h = nh; }
@@ -702,6 +864,7 @@ function fitAspect(v) {
 const big = () => (document.documentElement.classList.contains('large') ? 1.25 : 1);
 
 function apply() {
+  if (!svg.clientWidth || !svg.clientHeight) return;
   svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
   const s = vb.w / svgW;
   const B = big();
@@ -937,9 +1100,18 @@ PRESETS.forEach((p) => {
   };
   $('presets').appendChild(b);
 });
+{
+  const all = document.createElement('button');
+  all.type = 'button'; all.className = 'preset all'; all.id = 'allBtn';
+  all.innerHTML = `<span class="pi" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span><span><b>모든 시설</b></span>`;
+  all.onclick = () => $('reset').click();
+  $('presets').prepend(all);
+}
 function syncPresets() {
+  const allB = $('allBtn'); if (allB) allB.setAttribute('aria-pressed', String(active.size === 0));
   document.querySelectorAll('.preset').forEach((b) => {
     const p = PRESETS.find((x) => x.key === b.dataset.key);
+    if (!p) return;
     b.setAttribute('aria-pressed', String(p.feats.length === active.size && p.feats.every((k) => active.has(k))));
   });
 }
@@ -984,6 +1156,7 @@ const matchQuery = (f) => !query || [f.name, f.dong, f.address, f.category].join
 const visible = () => FAC.filter((f) => [...active].every((k) => f.features.includes(k)) && matchQuery(f) && (!favOnly || favs.has(f.id)));
 
 function render() {
+  syncPresets();
   const v = visible();
   const ids = new Set(v.map((f) => f.id));
   const narrowing = !!(active.size || query || favOnly);
@@ -1002,12 +1175,31 @@ function render() {
       <span class="item-top"><span class="item-name">${esc(f.name)}${favs.has(f.id) ? '<span class="star" aria-label="즐겨찾기">★</span>' : ''}</span><span class="item-cat">${f.category}</span></span>
       <span class="item-meta">${f.address}</span>
       <span class="tags">${f.features.map((k) => `<span class="tag">${FEATURES[k].label}</span>`).join('')}</span>
-    </button></li>`).join('')
+    </button>${cardExtra(f)}</li>`).join('')
     : `<li class="empty">${favOnly && !favs.size ? '아직 즐겨찾기한 곳이 없어요. 시설을 눌러 ☆ 즐겨찾기를 추가해 보세요.' : '조건에 맞는 시설이 없어요. 필터를 하나 줄이거나 검색어를 지워 보세요.'}</li>`;
-  $('list').querySelectorAll('.item').forEach((b) => (b.onclick = () => select(+b.dataset.id, true)));
+  $('list').querySelectorAll('#list > li:not(.empty)').forEach((li) => { const id = +li.querySelector('.item').dataset.id; li.onclick = () => { if (viewMode === 'list') setView('map'); select(id, true); }; });
   apply();
 }
 
+/* ---------- 목록 카드 ---------- */
+let viewMode = 'list';
+function cardExtra(f) {
+  return `<div class="item-extra">
+      <div class="yes-tags">${f.features.map((k) => `<span class="ytag"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>${FEATURES[k].label}</span>`).join('')}</div>
+      ${f.hours ? `<p class="hrs"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.6V8l2.4 1.6"/></svg><span>${esc(f.hours)}</span></p>` : ''}
+      <span class="more">지도에서 자세히 보기<svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+    </div>`;
+}
+function setView(m) {
+  viewMode = m;
+  $('layout').classList.toggle('mode-list', m === 'list');
+  $('tabList').setAttribute('aria-selected', String(m === 'list'));
+  $('tabMap').setAttribute('aria-selected', String(m === 'map'));
+  if (m === 'map') { svgW = svg.clientWidth || 1; vb = fitAspect(userMoved ? vb : VIEWS.jg); apply(); }
+  render();
+}
+$('tabList').onclick = () => setView('list');
+$('tabMap').onclick = () => setView('map');
 /* ---------- 상세 ---------- */
 function speak(text) {
   try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'ko-KR'; speechSynthesis.speak(u); } catch (_) {}
@@ -1034,7 +1226,7 @@ function select(id, move) {
   d.innerHTML = `
     <button class="close" aria-label="상세 닫기">✕</button>
     <h2 tabindex="-1">${f.name}</h2>
-    <div class="item-meta">${f.category} · ${f.dong ?? ''}<br>${f.address}</div>
+    <div class="item-meta">${f.category}<br>${f.address}</div>
     <ul class="flist">${Object.entries(FEATURES).map(([k, v]) => {
       const y = f.features.includes(k);
       return `<li class="${y ? 'yes' : 'no'}"><span class="mk" aria-hidden="true">${y ? '✓' : ''}</span>${v.label}<span class="sr-only">${y ? ' 있음' : ' 정보 없음'}</span></li>`;
@@ -1043,7 +1235,7 @@ function select(id, move) {
     ${f.note ? `<p class="fnote">${esc(f.note)}</p>` : ''}
     ${ns ? `<p class="near">가까운 역: <b>${ns.s.name}역</b> (${ns.s.lines.join('·')}) · 직선 약 ${ns.m}m</p>` : ''}
     <div class="actions">
-      <button class="btn primary" id="readBtn" type="button">🔊 음성으로 듣기</button>
+      <button class="btn primary" id="readBtn" type="button"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6v4h2.7L9 13V3L5.2 6H2.5Z"/><path d="M11.2 5.6a3.2 3.2 0 0 1 0 4.8"/></svg>음성으로 듣기</button>
       <button class="btn fav" id="favBtn" type="button" aria-pressed="${favs.has(f.id)}">${favs.has(f.id) ? '★ 즐겨찾기 해제' : '☆ 즐겨찾기'}</button>
       <a class="btn" target="_blank" rel="noopener" href="https://map.kakao.com/link/to/${encodeURIComponent(f.name)},${f.lat},${f.lng}">카카오맵 길찾기 ↗</a>
     </div>`;
