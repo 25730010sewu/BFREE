@@ -3,7 +3,6 @@
 > **Barrier Free, Be Free.**
 > 서울 중구의 경사로·엘리베이터·장애인 화장실·점자블록 등 배리어프리 편의시설을 한눈에 찾을 수 있는 웹서비스
 
-![B:FREE 썸네일](BFREE_thumbnail.png)
 
 🔗 **서비스 바로가기:** https://25730010sewu.github.io/BFREE/
 
